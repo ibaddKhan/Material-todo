@@ -1,12 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 const Card = ({ title, deleteTodo, editTodo, index }) => {
   const [showTodo, setShowTodo] = useState(true);
-  const defVal = title;
-  const editedValue = useRef("");
+  const [editedValue, setEditedValue] = useState(title);
 
   const saveEditTodo = () => {
-    const newValue = editedValue.current.value.trim();
+    const newValue = editedValue.trim();
 
     if (newValue !== '') {
       editTodo(index, newValue);
@@ -31,6 +30,7 @@ const Card = ({ title, deleteTodo, editTodo, index }) => {
             <button
               className="bg-blue-500 text-white px-3 py-1 rounded-full hover:bg-blue-600 transition duration-300"
               onClick={() => {
+                setEditedValue(title); 
                 setShowTodo(false);
               }}
             >
@@ -44,8 +44,8 @@ const Card = ({ title, deleteTodo, editTodo, index }) => {
             type="text"
             placeholder="Edit Todo"
             className="border border-gray-300 p-2 rounded w-full focus:outline-none"
-            ref={editedValue}
-            value={defVal}
+            value={editedValue}
+            onChange={(e) => setEditedValue(e.target.value)}
           />
           <button
             className="bg-green-500 text-white px-4 py-2 rounded-full mt-4 hover:bg-green-600 transition duration-300"
